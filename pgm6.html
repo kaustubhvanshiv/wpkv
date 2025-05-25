@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Computer Store Cart</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #F0F4F8; /* Light techy background */
+      padding: 30px;
+      max-width: 800px;
+      margin: 0 auto;
+      color: #2C3E50; /* Steel Blue */
+    }
+
+    h1 {
+      text-align: center;
+      color: #2C3E50;
+      font-weight: 700;
+      letter-spacing: 2px;
+      margin-bottom: 30px;
+    }
+
+    div {
+      background: #FFFFFF;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(44, 62, 80, 0.1);
+      padding: 24px 32px 16px 32px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    label {
+      font-weight: 600;
+      color: #2C3E50;
+      margin-right: 8px;
+    }
+
+    input, select {
+      padding: 10px 14px;
+      margin: 0 8px 0 0;
+      border-radius: 8px;
+      border: 1px solid #B0BEC5;
+      font-size: 1rem;
+      background: #FFFFFF;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    input:focus, select:focus {
+      border-color: #007BFF; /* Blue Highlight */
+    }
+
+    button {
+      padding: 12px 28px;
+      border-radius: 8px;
+      border: none;
+      background: #007BFF;
+      color: #FFFFFF;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: background 0.3s, box-shadow 0.3s, transform 0.1s;
+      box-shadow: 0 3px 12px rgba(0, 123, 255, 0.4);
+    }
+
+    button:hover {
+      background: #0056b3;
+      box-shadow: 0 6px 20px rgba(0, 86, 179, 0.6);
+      transform: translateY(-2px) scale(1.05);
+    }
+
+    .delete-btn {
+      background-color: #FF4D4D;
+      box-shadow: 0 3px 12px rgba(255, 77, 77, 0.4);
+    }
+
+    .delete-btn:hover {
+      background-color: #CC0000;
+      box-shadow: 0 6px 20px rgba(204, 0, 0, 0.6);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background: #FFFFFF;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(44, 62, 80, 0.1);
+      overflow: hidden;
+    }
+
+    th, td {
+      border: none;
+      padding: 14px 10px;
+      text-align: center;
+      font-size: 1rem;
+      color: #2C3E50;
+    }
+
+    th {
+      background: #E3F2FD;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    tr:not(:last-child) td {
+      border-bottom: 1px solid #CFD8DC;
+    }
+
+    input[type="number"] {
+      width: 60px;
+      text-align: center;
+    }
+
+    @media (max-width: 600px) {
+      div, table {
+        padding: 10px;
+        font-size: 0.95rem;
+      }
+      th, td {
+        padding: 8px 4px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Computer Store Cart</h1>
+
+  <div>
+    <label>Product:</label>
+    <select id="productName">
+      <option value="Gaming Laptop">Gaming Laptop</option>
+      <option value="Mechanical Keyboard">Mechanical Keyboard</option>
+      <option value="Gaming Mouse">Gaming Mouse</option>
+      <option value="Monitor 24in">Monitor 24in</option>
+    </select>
+
+    <label>Price:</label>
+    <input type="number" id="productPrice" placeholder="Enter price" min="0.01" step="0.01" />
+
+    <label>Quantity:</label>
+    <input type="number" id="productQty" placeholder="Qty" min="1" value="1"/>
+
+    <button onclick="addToCart()">Add to Cart</button>
+  </div>
+
+  <table id="cartTable">
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Price ($)</th>
+        <th>Quantity</th>
+        <th>Total</th>
+        <th>Update</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody id="cartBody">
+      <!-- Cart items will appear here -->
+    </tbody>
+  </table>
+
+  <script>
+    let cart = [];
+
+    function addToCart() {
+      const name = document.getElementById('productName').value;
+      const price = parseFloat(document.getElementById('productPrice').value);
+      const qty = parseInt(document.getElementById('productQty').value);
+
+      if (isNaN(price) || price <= 0) {
+        alert("Please enter a valid price greater than 0.");
+        return;
+      }
+      if (isNaN(qty) || qty < 1) {
+        alert("Please enter a valid quantity (at least 1).");
+        return;
+      }
+
+      const existing = cart.find(item => item.name === name && item.price === price);
+      if (existing) {
+        existing.qty += qty;
+      } else {
+        cart.push({ name, price, qty });
+      }
+      displayCart();
+    }
+
+    function displayCart() {
+      const tbody = document.getElementById('cartBody');
+      tbody.innerHTML = '';
+
+      cart.forEach((item, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${item.name}</td>
+          <td>${item.price.toFixed(2)}</td>
+          <td>
+            <input type="number" value="${item.qty}" min="1" onchange="updateQty(${index}, this.value)">
+          </td>
+          <td>${(item.price * item.qty).toFixed(2)}</td>
+          <td>
+            <button onclick="updateQty(${index}, document.querySelectorAll('#cartBody input')[${index}].value)">Update</button>
+          </td>
+          <td>
+            <button class="delete-btn" onclick="deleteItem(${index})">Delete</button>
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    function updateQty(index, newQty) {
+      newQty = parseInt(newQty);
+      if (isNaN(newQty) || newQty < 1) {
+        alert("Quantity must be at least 1.");
+        return;
+      }
+      cart[index].qty = newQty;
+      displayCart();
+    }
+
+    function deleteItem(index) {
+      cart.splice(index, 1);
+      displayCart();
+    }
+  </script>
+</body>
+</html>

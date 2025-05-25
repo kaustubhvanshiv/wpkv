@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head><title>Color Array</title></head>
+<body>
+  <input type="text" id="newColor" placeholder="Enter color">
+  <button onclick="addColor()">Add Color</button>
+  <p id="colorsList"></p>
+
+  <script>
+    const colors = ["Red", "Green", "Blue"];
+
+    function addColor() {
+      const color = document.getElementById('newColor').value;
+      if (!colors.includes(color)) {
+        colors.push(color);
+      }
+      document.getElementById('colorsList').innerText = "Colors: " + colors.join(", ");
+    }
+  </script>
+</body>
+</html>

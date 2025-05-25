@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>JS Greeting</title>
+    </head>
+
+    <body>
+        <input type="text" id="name" placeholder="Enter your name">
+        <button onclick="greet()">Greet</button>
+        <p id="output"></p>
+
+        <script>
+            function greet() {
+            const name = document.getElementById('name').value;
+            document.getElementById('output').innerText = `Hello ${name}... Welcome To Earf`;
+            }
+        </script>
+
+    </body>
+</html>

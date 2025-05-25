@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head><title>Character Count</title></head>
+<body>
+  <p>Check how many times a letter appears in an array:</p>
+  <button onclick="countA()">Count 'a'</button>
+  <p id="result"></p>
+
+  <script>
+    function countA() {
+      const arr = ['a', 'b', 'a', 'c', 'z','a'];
+      let count = arr.filter(char => char === 'a').length;
+      document.getElementById('result').innerText = `'a' has occured ${count} times in the array.`;
+    }
+  </script>
+</body>
+</html>
