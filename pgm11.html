@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dynamic Elements</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <h3>Click the button to add a new paragraph</h3>
+  <button id="addBtn">Add Paragraph</button>
+  <div id="content"></div>
+  <script>
+    $(document).ready(function() {
+      $('#addBtn').click(function() {
+        $('#content').append('<p>This is a dynamically added paragraph!</p>');
+      });
+    });
+  </script>
+</body>
+</html>

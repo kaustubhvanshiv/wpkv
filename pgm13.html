@@ -1,0 +1,37 @@
+<%@ page import="java.util.*" %>
+<%@ page import="java.text.*" %>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Locale Date Formatter</title>
+</head>
+<body>
+  <h2>Select a Locale to View Date Format</h2>
+  <form method="post" action="localeDateForm.jsp">
+    <label for="locale">Choose Locale:</label>
+    <select name="locale" id="locale">
+      <option value="en_US">English (US)</option>
+      <option value="fr_FR">French (France)</option>
+      <option value="de_DE">German (Germany)</option>
+      <option value="ja_JP">Japanese (Japan)</option>
+      <option value="hi_IN">Hindi (India)</option>
+    </select>
+    <input type="submit" value="Show Date">
+  </form>
+
+  <%
+    String localeParam = request.getParameter("locale");
+    if (localeParam != null) {
+      String[] parts = localeParam.split("_");
+      Locale selectedLocale = new Locale(parts[0], parts[1]);
+      Date currentDate = new Date();
+      DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.FULL, selectedLocale);
+      String formattedDate = dateFormat.format(currentDate);
+  %>
+      <h3>Date in <%= selectedLocale.getDisplayName() %>:</h3>
+      <p><strong><%= formattedDate %></strong></p>
+  <%
+    }
+  %>
+</body>
+</html>

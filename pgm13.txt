@@ -1,0 +1,33 @@
+How to Fix
+1. File Extension
+Make sure your file is named with a .jsp extension, for example:
+
+text
+localeDateForm.jsp
+2. Run on a Java Web Server
+Place your .jsp file inside the webapps directory of your Tomcat (or other Java EE server) project.
+
+Start your server.
+
+Access the file via http://localhost:8080/yourProjectName/localeDateForm.jsp
+
+Do NOT open the file directly from your file system (file://...)
+JSP must be processed by the server to convert the Java code into HTML.
+
+3. Check Server Configuration
+Ensure your server is running.
+
+Make sure your browser URL starts with http://localhost:8080/... (or your configured port).
+
+Summary
+JSP code will only execute when run on a Java web server.
+
+Directly opening the file in your browser will show the code as plain text.
+
+If you do these steps and still see the code:
+Double-check the file extension.
+
+Make sure you’re using the correct URL.
+
+Ensure your server is running and properly deployed.
+

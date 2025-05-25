@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Animate Div</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    #box {
+      width: 100px;
+      height: 100px;
+      background-color: steelblue;
+      position: relative;
+    }
+  </style>
+</head>
+<body>
+  <h3>Click the button to animate the div</h3>
+  <button id="animateBtn">Animate</button>
+  <div id="box"></div>
+  <script>
+    $(document).ready(function() {
+      $('#animateBtn').click(function() {
+        $('#box').animate({
+          left: '250px',
+          height: '150px',
+          width: '150px',
+          opacity: 0.7
+        }, 1000);
+      });
+    });
+  </script>
+</body>
+</html>

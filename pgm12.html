@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Popup on Mouseover</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    #popup {
+      display: none;
+      position: absolute;
+      top: 50px;
+      left: 100px;
+      padding: 15px;
+      background-color: #f9f9f9;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      z-index: 100;
+    }
+    #popup input[type="text"] {
+      margin: 5px 0;
+      padding: 5px;
+      width: 150px;
+      display: block;
+    }
+    #popup button {
+      margin-top: 8px;
+      padding: 6px 16px;
+      border-radius: 5px;
+      border: none;
+      background: #007bff;
+      color: #fff;
+      cursor: pointer;
+    }
+    #popup button:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <h3>Hover over the link below:</h3>
+  <a href="#" id="hoverLink">Hover me to see popup</a>
+  <div id="popup">
+    <input type="text" placeholder="First Name"><br>
+    <input type="text" placeholder="Last Name"><br>
+    <button>Submit</button>
+  </div>
+  <script>
+    $(document).ready(function() {
+      // Show popup and position it on mouseover
+      $('#hoverLink').on('mouseenter', function(event) {
+        $('#popup').css({
+          top: event.pageY + 10,
+          left: event.pageX + 10
+        }).fadeIn(150);
+      });
+
+      // Move popup with mouse
+      $('#hoverLink').on('mousemove', function(event) {
+        $('#popup').css({
+          top: event.pageY + 10,
+          left: event.pageX + 10
+        });
+      });
+
+      // Hide popup when mouse leaves both link and popup
+      $('#hoverLink, #popup').on('mouseleave', function(event) {
+        // If mouse is not moving to the popup or link, hide it
+        if (!$(event.relatedTarget).closest('#popup, #hoverLink').length) {
+          $('#popup').fadeOut(150);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
