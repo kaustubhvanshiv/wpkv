@@ -1,6 +1,8 @@
 # wpkv
 wp
 
+pgm1 --> company registration form with all input types
+
 pgm3 --> 3. Write a JavaScript code to take inputs from user and display that inputs in following pattern:
 "Hello ...name... Welcome To the World of JavaScript".
 
